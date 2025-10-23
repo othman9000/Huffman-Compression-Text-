@@ -3,6 +3,7 @@
 #include<vector>
 #include<string>
 #include<chrono>
+#define SHOW_TREE false
 using namespace std;
 //~5 us per one byte of the text file to be compressed + constant
 //~1.1 us per one byte of the compressed file to be decompressed + constant
@@ -439,8 +440,10 @@ void decodeHuffCodedFileIntoTXT(string& dir, string& name) {
         }
         Node* tree = createHuffTree(Nodes);//O(nlog(n)),where n = number of nodes
         Node* huff = tree;
-        //cout << "the tree after reconstruction : " << endl;
-        //displayNodes(Nodes);
+        if(SHOW_TREE){
+            cout << "the tree after reconstruction : " << endl;
+            displayNodes(Nodes);
+        }
         inFile.get(reinterpret_cast<char&>(byte));
         while (inFile.get(reinterpret_cast<char&>(byte))) {//O(1) for each iteration,O(n) where n ~= bytes of the actual encoded text
             if (inFile.peek() == EOF) //reading the last byte
@@ -499,7 +502,7 @@ int main() {
         result = createHuffTree(Nodes);//O(n) where n = number of nodes
         vector<bool> path;
         createHuffCodes(result, path);
-        //displayNodes(Nodes);
+        if(SHOW_TREE)   displayNodes(Nodes);
         createHuffCodedFile(fileInIntsUTF8, NodesTable, Nodes, name);
         for (Node* temp : Nodes) {
             delete temp;
