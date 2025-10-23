@@ -51,32 +51,6 @@ public:
             d = d->nxt;
         }
     }
-    void deleteNode(const unsigned int& key) {//O(n)
-        listNode* ptr = head;
-        listNode* prevPtr = head;
-        if (head != nullptr && head->data->key == key) {
-            if (tail == head)
-                tail = nullptr;
-            head = ptr->nxt;
-            delete ptr;
-            return;
-        }
-        else {
-            while (ptr != nullptr && prevPtr->data->key != key) {
-                if (ptr->data->key == key) {
-                    prevPtr->nxt = ptr->nxt;
-                    if (tail == ptr)
-                        tail = prevPtr;
-                    delete ptr;
-                    return;
-                }
-                else {
-                    prevPtr = ptr;
-                    ptr = ptr->nxt;
-                }
-            }
-        }
-    }
     void addNode(Node* n) {
         listNode* ptr = new listNode(n);
         if (tail != nullptr)
